@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `My email is ${email}.`;
 
             // WhatsApp number: 0544692205 → international format 971544692205
-            const waNumber = '971544692205';
+            const waNumber = '971559828767';
             const waURL = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
             // Show success state briefly, then redirect to WhatsApp
