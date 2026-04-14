@@ -339,7 +339,7 @@ h6 {
    ============================================ */
 .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 900px;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -427,6 +427,10 @@ h6 {
 
 /* XL screens (1280px and above) */
 @media (max-width: 1440px) {
+    .hero {
+    position: relative;
+    min-height: 805px;
+    }
     .hero-title {
         font-size: clamp(3.5rem, 7vw, 4rem);
         letter-spacing: -2.5px;
@@ -473,7 +477,7 @@ h6 {
 .hero-points {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 5px;
     margin-bottom: 36px;
     animation: fadeInUp 0.6s ease-out 0.5s backwards;
 }
