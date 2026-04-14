@@ -229,7 +229,7 @@ h6 {
 }
 
 .navbar-logo img {
-    height: 74px;
+    height: 85px;
     width: auto;
     display: block;
 }
@@ -414,6 +414,28 @@ h6 {
     margin-bottom: 24px;
     letter-spacing: -2px;
 }
+
+/* LG screens (1024px - 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .hero-title {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        letter-spacing: -1.5px;
+        line-height: 1.1;
+        margin-bottom: 20px;
+    }
+}
+
+/* XL screens (1280px and above) */
+@media (max-width: 1440px) {
+    .hero-title {
+        font-size: clamp(3.5rem, 7vw, 4rem);
+        letter-spacing: -2.5px;
+        line-height: 1;
+        margin-bottom: 10px;
+    }
+}
+
+
 
 .hero-line {
     display: block;
@@ -2182,7 +2204,7 @@ h6 {
     }
 
     .hero .container {
-        padding: 0 20px;
+        padding: 120px 20px;
     }
 
     .hero-content {
