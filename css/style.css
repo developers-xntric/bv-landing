@@ -347,6 +347,7 @@ h6 {
 
 .hero .container {
     max-width: 1400px;
+    
     padding: 0 clamp(24px, 5vw, 80px);
 }
 
@@ -429,6 +430,7 @@ h6 {
 @media (max-width: 1440px) {
     .hero {
     position: relative;
+    overflow-x: hidden;
     min-height: 805px;
     }
     .hero-title {
@@ -537,6 +539,7 @@ h6 {
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
     padding: 28px 0;
+    overflow: hidden;
 }
 
 .trust-items {
