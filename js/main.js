@@ -317,11 +317,18 @@ document.addEventListener('DOMContentLoaded', () => {
             source: params.get('utm_source') || '',
             campaign: params.get('utm_campaign') || '',
             ad_set: params.get('utm_adset') || params.get('utm_ad_set') || '',
-            keyword: params.get('utm_term') || params.get('utm_keyword') || ''
+            keyword: params.get('utm_term') || params.get('utm_keyword') || '',
+            gclid: params.get('gclid') || ''
         };
     }
 
     const utmData = getUTMParams();
+    
+    // Set hidden gclid if it exists
+    const gclidInput = document.getElementById('formGclid');
+    if (gclidInput && utmData.gclid) {
+        gclidInput.value = utmData.gclid;
+    }
 
     if (form) {
         form.addEventListener('submit', async (e) => {
@@ -333,10 +340,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Gather data
             const name = document.getElementById('formName').value.trim();
-            const email = document.getElementById('formEmail').value.trim();
+            const phone = document.getElementById('formPhone').value.trim();
             const carType = form.querySelector('input[name="car_type"]:checked')?.value;
             const servicesChecked = Array.from(form.querySelectorAll('input[name="services"]:checked'))
                 .map(cb => cb.value);
+            const gclid = document.getElementById('formGclid')?.value || '';
 
             // Validation
             let hasError = false;
@@ -346,8 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 hasError = true;
             }
 
-            if (!email || !isValidEmail(email)) {
-                showError('formEmail', 'Please enter a valid email');
+            if (!phone || phone.length < 8) {
+                showError('formPhone', 'Please enter a valid phone number');
                 hasError = true;
             }
 
@@ -385,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const leadPayload = {
                 submission_datetime: submissionDatetime,
                 name,
-                email,
+                phone,
                 car_type: carType,
                 services: servicesChecked,
                 status: 'New',
@@ -393,13 +401,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 source: utmData.source || 'Landing Page',
                 campaign: utmData.campaign,
                 ad_set: utmData.ad_set,
-                keyword: utmData.keyword
+                keyword: utmData.keyword,
+                gclid: gclid
             };
 
             // ========================================
             // SAVE TO GOOGLE SHEETS (non-blocking)
             // ========================================
-            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzyGijfaLKjHsHc-P6iCnEfqfjoIQGCdGJSOWmLfSbk-pVJoOSr28JXBO9CJXyLCNk/exec';
+            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwRNbBN6l9m9nTfOAasyxXnc50uFC0LZMaRpe8bx3RnSNM3vFFpyndnPBZhRfgd5Gn_/exec';
 
             if (GOOGLE_SHEET_URL) {
                 fetch(GOOGLE_SHEET_URL, {
@@ -433,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `Hi, it's ${name}.\n` +
                 `I want to get a quote for the following services: ${servicesList}.\n` +
                 `My car type is ${carType}.\n` +
-                `My email is ${email}.`;
+                `My phone is ${phone}.`;
 
             // WhatsApp number: 0544692205 → international format 971544692205
             const waNumber = '971559828767';
