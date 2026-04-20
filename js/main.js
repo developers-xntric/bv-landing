@@ -318,16 +318,21 @@ document.addEventListener('DOMContentLoaded', () => {
             campaign: params.get('utm_campaign') || '',
             ad_set: params.get('utm_adset') || params.get('utm_ad_set') || '',
             keyword: params.get('utm_term') || params.get('utm_keyword') || '',
-            gclid: params.get('gclid') || ''
+            gclid: params.get('gclid') || '',
+            adgroupid: params.get('adgroupid') || ''
         };
     }
 
     const utmData = getUTMParams();
     
-    // Set hidden gclid if it exists
+    // Set hidden tracking inputs if they exist
     const gclidInput = document.getElementById('formGclid');
     if (gclidInput && utmData.gclid) {
         gclidInput.value = utmData.gclid;
+    }
+    const adgroupidInput = document.getElementById('formAdGroupId');
+    if (adgroupidInput && utmData.adgroupid) {
+        adgroupidInput.value = utmData.adgroupid;
     }
 
     if (form) {
@@ -345,6 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const servicesChecked = Array.from(form.querySelectorAll('input[name="services"]:checked'))
                 .map(cb => cb.value);
             const gclid = document.getElementById('formGclid')?.value || '';
+            const adgroupid = document.getElementById('formAdGroupId')?.value || '';
 
             // Validation
             let hasError = false;
@@ -402,13 +408,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 campaign: utmData.campaign,
                 ad_set: utmData.ad_set,
                 keyword: utmData.keyword,
-                gclid: gclid
+                gclid: gclid,
+                adgroupid: adgroupid
             };
 
             // ========================================
             // SAVE TO GOOGLE SHEETS (non-blocking)
             // ========================================
-            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwRNbBN6l9m9nTfOAasyxXnc50uFC0LZMaRpe8bx3RnSNM3vFFpyndnPBZhRfgd5Gn_/exec';
+            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwpXibiLwCNGE77UJOtg9TvSRD8VgVoVqAf_rmFNcl8ddQ1RxIOxdVaVWZe7SVavep8/exec';
 
             if (GOOGLE_SHEET_URL) {
                 fetch(GOOGLE_SHEET_URL, {
