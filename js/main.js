@@ -1,18 +1,9 @@
-/* ============================================
-   BLUEVERSE — Main JavaScript
-   Premium Landing Page Interactions
-   ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
 
-    // ========================================
-    // NAVBAR
-    // ========================================
+document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
     const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    // Scroll effect
+    const navLinks = document.getElementById('navLinks');
     const handleScroll = () => {
         if (window.scrollY > 60) {
             navbar.classList.add('scrolled');
@@ -21,9 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    // Mobile toggle
+    handleScroll();
     const navBackdrop = document.getElementById('navBackdrop');
     const mobileMenuClose = document.getElementById('mobileMenuClose');
     
@@ -33,17 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.classList.toggle('open');
         navBackdrop.classList.toggle('open');
         document.body.style.overflow = isOpen ? '' : 'hidden';
-    });
-
-    // Close when clicking backdrop
+    });
     navBackdrop.addEventListener('click', () => {
         navToggle.classList.remove('open');
         navLinks.classList.remove('open');
         navBackdrop.classList.remove('open');
         document.body.style.overflow = '';
-    });
-
-    // Close when clicking close button
+    });
     if (mobileMenuClose) {
         mobileMenuClose.addEventListener('click', () => {
             navToggle.classList.remove('open');
@@ -51,9 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navBackdrop.classList.remove('open');
             document.body.style.overflow = '';
         });
-    }
-
-    // Close mobile menu on link click
+    }
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             navToggle.classList.remove('open');
@@ -61,11 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navBackdrop.classList.remove('open');
             document.body.style.overflow = '';
         });
-    });
-
-    // ========================================
-    // GENERIC CAROUSEL ENGINE
-    // ========================================
+    });
     class Carousel {
         constructor(options) {
             this.track = document.getElementById(options.trackId);
@@ -94,12 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (this.autoPlay) {
                 this.startAutoPlay();
-            }
-
-            // Touch support
-            this.initTouch();
-
-            // Recalculate on resize
+            }
+            this.initTouch();
             window.addEventListener('resize', () => {
                 this.calculateVisibleCount();
                 this.createDots();
@@ -164,9 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const gap = parseInt(getComputedStyle(this.track).gap) || 24;
             const itemWidth = this.items[0].offsetWidth;
             const offset = this.currentIndex * (itemWidth + gap);
-            this.track.style.transform = `translateX(-${offset}px)`;
-
-            // Update dots
+            this.track.style.transform = `translateX(-${offset}px)`;
             if (this.dotsContainer) {
                 const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
                 dots.forEach((dot, i) => {
@@ -207,9 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 isDragging = false;
             }, { passive: true });
         }
-    }
-
-    // Initialize carousels
+    }
     const servicesCarousel = new Carousel({
         trackId: 'servicesCarousel',
         prevId: 'servicesPrev',
@@ -246,11 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         itemSelector: '.protection-card',
         autoPlay: true,
         autoPlayInterval: 5000
-    });
-
-    // ========================================
-    // SCROLL REVEAL ANIMATIONS
-    // ========================================
+    });
     const revealElements = document.querySelectorAll(
         '.section-header, .service-card, .value-card, .why-card, .testimonial-card, .quote-wrapper, .ba-slide, .trust-strip, .final-cta-content, .faq-item, .protection-card, .precision-content'
     );
@@ -274,11 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    revealElements.forEach(el => revealObserver.observe(el));
-
-    // ========================================
-    // FAQ ACCORDION
-    // ========================================
+    revealElements.forEach(el => revealObserver.observe(el));
     const faqItems = document.querySelectorAll('.faq-item');
 
     faqItems.forEach(item => {
@@ -286,30 +249,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!question) return;
 
         question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-
-            // Close all other items
+            const isActive = item.classList.contains('active');
             faqItems.forEach(other => {
                 if (other !== item) {
                     other.classList.remove('active');
                     other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
                 }
-            });
-
-            // Toggle current
+            });
             item.classList.toggle('active', !isActive);
             question.setAttribute('aria-expanded', !isActive);
         });
-    });
-
-    // ========================================
-    // LEAD FORM SUBMISSION
-    // ========================================
+    });
     const form = document.getElementById('quoteForm');
     const formSuccess = document.getElementById('formSuccess');
-    const submitBtn = document.getElementById('submitBtn');
-
-    // Capture UTM parameters from URL on page load
+    const submitBtn = document.getElementById('submitBtn');
     function getUTMParams() {
         const params = new URLSearchParams(window.location.search);
         return {
@@ -323,9 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    const utmData = getUTMParams();
-    
-    // Set hidden tracking inputs if they exist
+    const utmData = getUTMParams();
     const gclidInput = document.getElementById('formGclid');
     if (gclidInput && utmData.gclid) {
         gclidInput.value = utmData.gclid;
@@ -337,22 +288,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (form) {
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            // Clear previous errors
+            e.preventDefault();
             form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-            form.querySelectorAll('.error-message').forEach(el => el.remove());
-
-            // Gather data
+            form.querySelectorAll('.error-message').forEach(el => el.remove());
             const name = document.getElementById('formName').value.trim();
             const phone = document.getElementById('formPhone').value.trim();
             const carType = form.querySelector('input[name="car_type"]:checked')?.value;
             const servicesChecked = Array.from(form.querySelectorAll('input[name="services"]:checked'))
                 .map(cb => cb.value);
             const gclid = document.getElementById('formGclid')?.value || '';
-            const adgroupid = document.getElementById('formAdGroupId')?.value || '';
-
-            // Validation
+            const adgroupid = document.getElementById('formAdGroupId')?.value || '';
             let hasError = false;
 
             if (!name) {
@@ -365,8 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hasError = true;
             }
 
-            if (!carType) {
-                // Since it's a radio group, we append error to the grid
+            if (!carType) {
                 const checkboxGrid = form.querySelector('.checkbox-grid');
                 if (checkboxGrid) {
                     const msg = document.createElement('div');
@@ -388,13 +332,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 hasError = true;
             }
 
-            if (hasError) return;
-
-            // Show loading
+            if (hasError) return;
             submitBtn.classList.add('loading');
-            submitBtn.textContent = 'Preparing WhatsApp...';
-
-            // Build structured lead data
+            submitBtn.textContent = 'Preparing WhatsApp...';
             const submissionDatetime = new Date().toISOString();
             const leadPayload = {
                 submission_datetime: submissionDatetime,
@@ -410,11 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 keyword: utmData.keyword,
                 gclid: gclid,
                 adgroupid: adgroupid
-            };
-
-            // ========================================
-            // SAVE TO GOOGLE SHEETS (non-blocking)
-            // ========================================
+            };
             const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwpXibiLwCNGE77UJOtg9TvSRD8VgVoVqAf_rmFNcl8ddQ1RxIOxdVaVWZe7SVavep8/exec';
 
             if (GOOGLE_SHEET_URL) {
@@ -430,9 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('❌ Google Sheets error:', err);
                     console.log('Data attempted:', leadPayload);
                 });
-            }
-
-            // Also save to local database (non-blocking)
+            }
             try {
                 fetch('tables/leads', {
                     method: 'POST',
@@ -441,25 +375,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             } catch (err) {
                 console.log('Lead save note:', err);
-            }
-
-            // Build WhatsApp message
+            }
             const servicesList = servicesChecked.join(', ');
             const waMessage =
                 `Hi, it's ${name}.\n` +
                 `I want to get a quote for the following services: ${servicesList}.\n` +
                 `My car type is ${carType}.\n` +
-                `My phone is ${phone}.`;
-
-            // WhatsApp number: 0544692205 → international format 971544692205
+                `My phone is ${phone}.`;
             const waNumber = '971559828767';
-            const waURL = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
-
-            // Show success state briefly, then redirect to WhatsApp
+            const waURL = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
             form.style.display = 'none';
-            formSuccess.style.display = 'block';
-
-            // Small delay so user sees the confirmation, then open WhatsApp
+            formSuccess.style.display = 'block';
             setTimeout(() => {
                 window.open(waURL, '_blank');
             }, 600);
@@ -479,11 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    // ========================================
-    // SMOOTH SCROLL FOR ANCHOR LINKS
-    // ========================================
+    }
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
@@ -497,11 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-    });
-
-    // ========================================
-    // ACTIVE NAV LINK ON SCROLL
-    // ========================================
+    });
     const sections = document.querySelectorAll('section[id]');
     const navLinkItems = document.querySelectorAll('.navbar-links a');
 
@@ -524,11 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    window.addEventListener('scroll', activateNavLink, { passive: true });
-
-    // ========================================
-    // COUNTER ANIMATION (Trust Strip)
-    // ========================================
+    window.addEventListener('scroll', activateNavLink, { passive: true });
     const trustStrip = document.querySelector('.trust-strip');
     if (trustStrip) {
         const trustObserver = new IntersectionObserver((entries) => {
@@ -563,11 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 30);
             }
         });
-    }
-
-    // ========================================
-    // PARALLAX EFFECT ON HERO
-    // ========================================
+    }
     const heroImg = document.querySelector('.hero-bg-img');
     if (heroImg && window.innerWidth > 768) {
         window.addEventListener('scroll', () => {
@@ -576,11 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 heroImg.style.transform = `scale(1.05) translateY(${scrolled * 0.15}px)`;
             }
         }, { passive: true });
-    }
-
-    // ========================================
-    // PRELOAD IMAGES
-    // ========================================
+    }
     const imagesToPreload = document.querySelectorAll('.hero-bg-img, .service-card-img img');
     imagesToPreload.forEach(img => {
         if (img.complete) return;
